@@ -8,7 +8,12 @@ const ioServer = new io.Server(3000, {
 
 ioServer.on("connection", (socket) => {
   console.log(`Hi ${socket.id}`);
+
   socket.on("disconnect", () => {
     console.log(`Bye ${socket.id}`);
+  });
+
+  socket.on("user:message", (data) => {
+    ioServer.emit("message", data);
   });
 });
